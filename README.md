@@ -23,5 +23,5 @@ Refer to the extension page for the full description and user guide: https://fre
 ## Installation
 You can install the Emails Log extension with Composer:
 ```
-composer require freento/emails-log
+composer require freento/emailslog
 ```
