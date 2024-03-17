@@ -1,0 +1,26 @@
+<?php
+/** @var \Freento\EmailsLog\Block\Adminhtml\Log\Log $block */
+/** @var \Magento\Framework\Escaper $escaper */
+?>
+
+<?php if ($block->getDaysBeforeClean() > 0): ?>
+    <p><i>
+        <?=
+            $escaper->escapeHtml(__(
+                'Additional: records older than %1 days will be automatically cleared',
+                $block->escapeHtml($block->getDaysBeforeClean())
+            ));
+        ?>
+    </i></p>
+<?php else: ?>
+    <p class="additional-color">
+        <?=
+            /* @noEscape */
+            __(
+                'Attention: automatic log cleaning is turned off. '
+                    . 'If you want to enable this option please follow the %1.',
+                '<a href="' . $escaper->escapeUrl($block->getConfigUrl()) . '">' . __('link') . '</a>'
+            );
+        ?>
+    </p>
+<?php endif; ?>

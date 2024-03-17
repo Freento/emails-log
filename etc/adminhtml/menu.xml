@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+      <add id="Freento_EmailsLog::freento" title="Freento" translate="title" module="Freento_EmailsLog"
+           parent="Magento_Backend::system" sortOrder="100" dependsOnModule="Freento_EmailsLog" resource="Freento_EmailsLog::freento"/>
+      <add id="Freento_EmailsLog::freento_log" title="Emails Log" translate="title" module="Freento_EmailsLog"
+           parent="Freento_EmailsLog::freento" sortOrder="0" dependsOnModule="Freento_EmailsLog" action="emailslog/log" resource="Freento_EmailsLog::freento"/>
+    </menu>
+</config>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <emailslog>
+            <general>
+                <enabled>0</enabled>
+                <save_email_content>0</save_email_content>
+                <show_iframe>1</show_iframe>
+                <days_before_clean>90</days_before_clean>
+            </general>
+        </emailslog>
+    </default>
+</config>

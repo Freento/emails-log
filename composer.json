@@ -1,0 +1,17 @@
+{
+    "name": "freento/emailslog",
+    "version": "1.2.0",
+    "description": "Catches all emails sent from a Magento store and additionally logs them to the database.",
+    "type": "magento2-module",
+    "require": {
+        "php": ">=8.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Freento\\EmailsLog\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}

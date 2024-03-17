@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="styles"/>
+    <body>
+        <referenceContainer name="content">
+            <block class="Freento\EmailsLog\Block\Adminhtml\Log\Log" name="Log" template="Freento_EmailsLog::additional.phtml"/>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <uiComponent name="emailslog_log_listing"/>
+        </referenceContainer>
+    </body>
+</page>

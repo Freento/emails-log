@@ -1,0 +1,19 @@
+{
+    "emailslog_log": {
+        "column": {
+            "log_id": true,
+            "recipient": true,
+            "bcc": true,
+            "subject": true,
+            "content": true,
+            "status": true,
+            "created_at": true
+        },
+        "index": {
+            "EMAILSLOG_LOG_RECIPIENT_BCC_SUBJECT": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

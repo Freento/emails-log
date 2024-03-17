@@ -1,0 +1,25 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Freento\EmailsLog\Api\LogRepositoryInterface" type="Freento\EmailsLog\Model\LogRepository"/>
+    <preference for="Freento\EmailsLog\Api\Data\LogInterface" type="Freento\EmailsLog\Model\Log"/>
+    <preference for="Freento\EmailsLog\Api\Data\LogSearchResultInterface" type="Freento\EmailsLog\Model\LogSearchResult"/>
+    <virtualType name="Freento\EmailsLog\Model\LogSearchResult" type="Magento\Framework\Api\SearchResults"/>
+    
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="emailslog_log_listing_data_source" xsi:type="string">Freento\EmailsLog\Model\ResourceModel\Log\ListingCollection</item>
+            </argument>
+        </arguments>
+    </type>
+    
+   <type name="Magento\Email\Model\Transport">
+       <plugin name="Freento_EmailsLog_Plugin_Model_TransportPlugin" type="Freento\EmailsLog\Plugin\Model\TransportPlugin" sortOrder="1"/>
+   </type>
+    
+   <virtualType name="Freento\EmailsLog\Model\ResourceModel\Log\ListingCollection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+       <arguments>
+           <argument name="mainTable" xsi:type="string">emailslog_log</argument>
+           <argument name="resourceModel" xsi:type="string">Freento\EmailsLog\Model\ResourceModel\Log</argument>
+       </arguments>
+   </virtualType>
+</config>

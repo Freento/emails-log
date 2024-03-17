@@ -1,0 +1,54 @@
+<?php
+/** @var \Freento\EmailsLog\Block\Adminhtml\Actions\View $block */
+/** @var \Magento\Framework\Escaper $escaper */
+
+$emailLog = $block->getEmailLog();
+?>
+
+<?php  ?>
+
+<div class="information">
+    <b><?= $escaper->escapeHtml(__('Recipient') . ':') ?></b> 
+    <?= $escaper->escapeHtml($emailLog->getRecipient()); ?>
+    <hr>
+    
+    <b><?= $escaper->escapeHtml(__('Bcc') . ':') ?></b>
+    <?= $escaper->escapeHtml($emailLog->getBcc() == null ? __('No ') :  $emailLog->getBcc()) ?>
+    <hr>
+    
+    <b><?= $escaper->escapeHtml(__('Subject') . ':') ?></b> 
+    <?= $escaper->escapeHtml($emailLog->getSubject()); ?>
+    <hr>
+    
+    <b><?= $escaper->escapeHtml(__('Status') . ':') ?></b> 
+    <?= $escaper->escapeHtml($emailLog->getStatus()); ?>
+    <hr>
+    
+    <b><?= $escaper->escapeHtml(__('Created at') . ':') ?></b>
+    <?= $escaper->escapeHtml($emailLog->getCreatedAt()); ?>
+</div>
+
+<?php if ($emailLog->getContent() == null): ?>
+    <div class="no-content">
+        <p><?=
+                /* @noEscape */
+                __(
+                    'While recording this log, the option Save content was turned off. '
+                        . 'You can enable the option by clicking on the %1.',
+                    '<a href="' . $escaper->escapeUrl($block->getConfigUrl()) . '">'. __('link') . '</a>'
+                )
+            ?>
+        </p>
+    </div>
+<?php else: ?>
+    <?php if ($block->isIframeDisplayable()): ?>
+        <iframe 
+            src="<?= $escaper->escapeUrl($block->getIframeUrl()); ?>"
+            class="frame-class"
+        ></iframe>
+    <?php else: ?>
+        <div class="content">
+            <?= /* @noEscape */ $emailLog->getContent(); ?>
+        </div>
+    <?php endif; ?>
+<?php endif; ?>

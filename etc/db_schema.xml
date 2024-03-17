@@ -1,0 +1,19 @@
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="emailslog_log" resource="default" engine="innodb" comment="Emails Log table">
+        <column xsi:type="int" name="log_id" unsigned="true" nullable="false" identity="true" comment="Log Id"/>
+        <column xsi:type="text" name="recipient" nullable="false" comment="Recipient"/>
+        <column xsi:type="text" name="bcc" nullable="true" comment="Bcc"/>
+        <column xsi:type="text" name="subject" nullable="false" comment="Subject"/>
+        <column xsi:type="text" name="content" nullable="true" comment="Content"/>
+        <column xsi:type="text" name="status" nullable="false" comment="Status"/>
+        <column xsi:type="timestamp" name="created_at" nullable="false" default="CURRENT_TIMESTAMP" on_update="false" comment="Created At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="log_id"/>
+        </constraint>
+        <index referenceId="EMAILSLOG_LOG_RECIPIENT_SUBJECT_BCC" indexType="fulltext">
+            <column name="recipient"/>
+            <column name="bcc"/>
+            <column name="subject"/>
+        </index>
+    </table>
+</schema>

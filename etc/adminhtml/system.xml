@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="freento" translate="label" sortOrder="1000">
+            <label>freento</label>
+        </tab>
+        <section id="emailslog" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Emails Log</label>
+            <tab>freento</tab>
+            <resource>Freento_EmailsLog::emailslog_config</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>General</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Emails Logging enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="save_email_content" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Save Email Content</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Adds the ability to view additional information about letters.</comment>
+                </field>
+                <field id="show_iframe" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Display content in a frame</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>The content on the view page will be contained in the frame.</comment>
+                </field>
+                <field id="days_before_clean" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Clear records older than (days)</label>
+                    <validate>validate-digits validate-number-range number-range-0-2147483647</validate>
+                    <comment>
+                        Records older than the specified number of days will be automatically cleared.
+                        If you set empty or zero records will not be deleted!
+                    </comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
