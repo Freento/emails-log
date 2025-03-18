@@ -3,7 +3,7 @@
     <preference for="Freento\EmailsLog\Api\Data\LogInterface" type="Freento\EmailsLog\Model\Log"/>
     <preference for="Freento\EmailsLog\Api\Data\LogSearchResultInterface" type="Freento\EmailsLog\Model\LogSearchResult"/>
     <virtualType name="Freento\EmailsLog\Model\LogSearchResult" type="Magento\Framework\Api\SearchResults"/>
-    
+
     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <arguments>
             <argument name="collections" xsi:type="array">
@@ -11,11 +11,16 @@
             </argument>
         </arguments>
     </type>
-    
+
    <type name="Magento\Email\Model\Transport">
        <plugin name="Freento_EmailsLog_Plugin_Model_TransportPlugin" type="Freento\EmailsLog\Plugin\Model\TransportPlugin" sortOrder="1"/>
    </type>
-    
+
+   <type name="Magento\Framework\Mail\Template\TransportBuilder">
+       <plugin name="Freento_EmailsLog_Plugin_Mail_Template_TransportBuilderPlugin"
+               type="Freento\EmailsLog\Plugin\Mail\Template\TransportBuilderPlugin" />
+   </type>
+
    <virtualType name="Freento\EmailsLog\Model\ResourceModel\Log\ListingCollection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
        <arguments>
            <argument name="mainTable" xsi:type="string">emailslog_log</argument>

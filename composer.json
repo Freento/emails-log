@@ -1,6 +1,6 @@
 {
     "name": "freento/emailslog",
-    "version": "1.2.0",
+    "version": "1.3.1",
     "description": "Catches all emails sent from a Magento store and additionally logs them to the database.",
     "type": "magento2-module",
     "require": {

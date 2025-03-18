@@ -6,6 +6,8 @@
         <column xsi:type="text" name="subject" nullable="false" comment="Subject"/>
         <column xsi:type="text" name="content" nullable="true" comment="Content"/>
         <column xsi:type="text" name="status" nullable="false" comment="Status"/>
+        <column xsi:type="text" name="template" nullable="true" comment="Template"/>
+        <column xsi:type="text" name="store_id" nullable="true" comment="Store"/>
         <column xsi:type="timestamp" name="created_at" nullable="false" default="CURRENT_TIMESTAMP" on_update="false" comment="Created At"/>
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="log_id"/>

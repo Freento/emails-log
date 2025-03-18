@@ -10,6 +10,9 @@ use Freento\EmailsLog\Model\Log;
 use Magento\Backend\Block\Widget\Container;
 use Magento\Backend\Block\Widget\Context;
 use Magento\Framework\App\Request\DataPersistorInterface;
+use Magento\Store\Model\StoreManagerInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Psr\Log\LoggerInterface;
 
 class View extends Container
 {
@@ -17,12 +20,16 @@ class View extends Container
      * @param Context $context
      * @param Config $helperConfig
      * @param DataPersistorInterface $dataPersistor
+     * @param StoreManagerInterface $storeManager
+     * @param LoggerInterface $logger
      * @param array $data
      */
     public function __construct(
         Context $context,
         private readonly Config $helperConfig,
         private readonly DataPersistorInterface $dataPersistor,
+        private readonly StoreManagerInterface $storeManager,
+        private readonly LoggerInterface $logger,
         array $data = []
     ) {
         parent::__construct($context, $data);
@@ -82,5 +89,27 @@ class View extends Container
     public function isIframeDisplayable(): bool
     {
         return $this->helperConfig->isIframeDisplayable();
+    }
+
+    /**
+     * Get store label
+     *
+     * @param LogInterface $log
+     * @return string
+     */
+    public function getStoreLabel(LogInterface $log): string
+    {
+        if (!$log->getStore()) {
+            return '-';
+        }
+
+        try {
+            $storeName = $this->storeManager->getStore($log->getStore())->getName();
+        } catch (NoSuchEntityException $e) {
+            $this->logger->debug('Freento_EmailsLog - ' . $e->getMessage(), ['trace' => $e->getTrace()]);
+            $storeName = $log->getStore();
+        }
+
+        return $storeName;
     }
 }

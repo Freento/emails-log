@@ -8,22 +8,30 @@ $emailLog = $block->getEmailLog();
 <?php  ?>
 
 <div class="information">
-    <b><?= $escaper->escapeHtml(__('Recipient') . ':') ?></b> 
+    <b><?= $escaper->escapeHtml(__('Recipient') . ':') ?></b>
     <?= $escaper->escapeHtml($emailLog->getRecipient()); ?>
     <hr>
-    
+
     <b><?= $escaper->escapeHtml(__('Bcc') . ':') ?></b>
     <?= $escaper->escapeHtml($emailLog->getBcc() == null ? __('No ') :  $emailLog->getBcc()) ?>
     <hr>
-    
-    <b><?= $escaper->escapeHtml(__('Subject') . ':') ?></b> 
+
+    <b><?= $escaper->escapeHtml(__('Subject') . ':') ?></b>
     <?= $escaper->escapeHtml($emailLog->getSubject()); ?>
     <hr>
-    
-    <b><?= $escaper->escapeHtml(__('Status') . ':') ?></b> 
+
+    <b><?= $escaper->escapeHtml(__('Status') . ':') ?></b>
     <?= $escaper->escapeHtml($emailLog->getStatus()); ?>
     <hr>
-    
+
+    <b><?= $escaper->escapeHtml(__('Template') . ':') ?></b>
+    <?= $escaper->escapeHtml($emailLog->getTemplate()); ?>
+    <hr>
+
+    <b><?= $escaper->escapeHtml(__('Store') . ':') ?></b>
+    <?= $escaper->escapeHtml($block->getStoreLabel($emailLog)) ?>
+    <hr>
+
     <b><?= $escaper->escapeHtml(__('Created at') . ':') ?></b>
     <?= $escaper->escapeHtml($emailLog->getCreatedAt()); ?>
 </div>
@@ -42,7 +50,7 @@ $emailLog = $block->getEmailLog();
     </div>
 <?php else: ?>
     <?php if ($block->isIframeDisplayable()): ?>
-        <iframe 
+        <iframe
             src="<?= $escaper->escapeUrl($block->getIframeUrl()); ?>"
             class="frame-class"
         ></iframe>

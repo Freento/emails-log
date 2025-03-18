@@ -12,6 +12,8 @@ interface LogInterface
     public const SUBJECT = 'subject';
     public const CONTENT = 'content';
     public const STATUS = 'status';
+    public const TEMPLATE = 'template';
+    public const STORE_ID = 'store_id';
     public const CREATED_AT = 'created_at';
 
     /**
@@ -103,6 +105,36 @@ interface LogInterface
      * @return void
      */
     public function setStatus(string $status): void;
+
+    /**
+     * Return template
+     *
+     * @return string
+     */
+    public function getTemplate(): string;
+
+    /**
+     * Set template
+     *
+     * @param string $template
+     * @return void
+     */
+    public function setTemplate(string $template): void;
+
+    /**
+     * Return store
+     *
+     * @return string
+     */
+    public function getStore(): string;
+
+    /**
+     * Set store
+     *
+     * @param string $store
+     * @return void
+     */
+    public function setStore(string $store): void;
 
     /**
      * Return created at
