@@ -26,10 +26,10 @@ class TransportBuilderPlugin
      * @param string $templateIdentifier
      * @return void
      */
-    public function beforeSetTemplateIdentifier(TransportBuilder $subject, $templateIdentifier): void
+    public function beforeSetTemplateIdentifier(TransportBuilder $subject, string $templateIdentifier): void
     {
         $id = spl_object_hash($subject);
-        $this->additionalInfoStorage->setDataValue($id, LogInterface::TEMPLATE, (string)$templateIdentifier);
+        $this->additionalInfoStorage->setDataValue($id, LogInterface::TEMPLATE, $templateIdentifier);
     }
 
     /**
@@ -39,7 +39,7 @@ class TransportBuilderPlugin
      * @param array $templateOptions
      * @return void
      */
-    public function beforeSetTemplateOptions(TransportBuilder $subject, $templateOptions)
+    public function beforeSetTemplateOptions(TransportBuilder $subject, array $templateOptions): void
     {
         $id = spl_object_hash($subject);
         $store = $templateOptions['store'] ?? '';
@@ -53,7 +53,7 @@ class TransportBuilderPlugin
      * @param TransportInterface $result
      * @return TransportInterface
      */
-    public function afterGetTransport(TransportBuilder $subject, TransportInterface $result)
+    public function afterGetTransport(TransportBuilder $subject, TransportInterface $result): TransportInterface
     {
         $builderId = spl_object_hash($subject);
         $transportId = spl_object_hash($result);

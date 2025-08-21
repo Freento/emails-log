@@ -20,8 +20,8 @@ class StoreView extends Column
      * @param LoggerInterface $logger
      * @param ContextInterface $context
      * @param UiComponentFactory $uiComponentFactory
-     * @param mixed[] $components
-     * @param mixed[] $data
+     * @param array $components
+     * @param array $data
      */
     public function __construct(
         private readonly StoreManagerInterface $storeManager,
@@ -37,8 +37,8 @@ class StoreView extends Column
     /**
      * Prepare Data Source
      *
-     * @param mixed[] $dataSource
-     * @return mixed[]
+     * @param array $dataSource
+     * @return array
      */
     public function prepareDataSource(array $dataSource): array
     {

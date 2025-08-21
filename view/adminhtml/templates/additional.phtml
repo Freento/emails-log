@@ -8,7 +8,7 @@
         <?=
             $escaper->escapeHtml(__(
                 'Additional: records older than %1 days will be automatically cleared',
-                $block->escapeHtml($block->getDaysBeforeClean())
+                $escaper->escapeHtml($block->getDaysBeforeClean())
             ));
         ?>
     </i></p>

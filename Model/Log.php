@@ -3,6 +3,7 @@
 namespace Freento\EmailsLog\Model;
 
 use Freento\EmailsLog\Api\Data\LogInterface;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Model\AbstractModel;
 
 class Log extends AbstractModel implements LogInterface
@@ -23,8 +24,9 @@ class Log extends AbstractModel implements LogInterface
      * Initialize resource model
      *
      * @return void
+     * @throws LocalizedException
      */
-    protected function _construct()
+    protected function _construct(): void
     {
         $this->_init(ResourceModel\Log::class);
     }

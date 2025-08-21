@@ -18,12 +18,10 @@ class Iframe extends Action implements HttpGetActionInterface
     /**
      * @param Context $context
      * @param LogRepository $logRepository
-     * @param ResultFactory $resultFactory
      */
     public function __construct(
         Context $context,
-        private readonly LogRepository $logRepository,
-        protected $resultFactory
+        private readonly LogRepository $logRepository
     ) {
         parent::__construct($context);
     }

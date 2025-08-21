@@ -13,7 +13,7 @@ interface LogSearchResultsInterface extends SearchResultInterface
      *
      * @return array
      */
-    public function getItems();
+    public function getItems(): array;
 
     /**
      * Sets items by array of items
@@ -21,5 +21,5 @@ interface LogSearchResultsInterface extends SearchResultInterface
      * @param array $items
      * @return array
      */
-    public function setItems(array $items);
+    public function setItems(array $items): array;
 }

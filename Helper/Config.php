@@ -21,7 +21,7 @@ class Config extends AbstractHelper
      * @param int|null $storeId
      * @return string|null
      */
-    private function getConfigValue(string $configPath, int $storeId = null): ?string
+    private function getConfigValue(string $configPath, ?int $storeId = null): ?string
     {
         return $this->scopeConfig->getValue(
             $configPath,
@@ -36,7 +36,7 @@ class Config extends AbstractHelper
      * @param int|null $storeId
      * @return int
      */
-    public function getDaysBeforeClean(int $storeId = null): int
+    public function getDaysBeforeClean(?int $storeId = null): int
     {
         return (int) $this->getConfigValue(self::XML_PATH_EMAILSLOG_DAYS_BEFORE_CLEAN, $storeId);
     }
@@ -47,7 +47,7 @@ class Config extends AbstractHelper
      * @param int|null $storeId
      * @return bool
      */
-    public function isIframeDisplayable(int $storeId = null): bool
+    public function isIframeDisplayable(?int $storeId = null): bool
     {
         return (bool)$this->getConfigValue(self::XML_PATH_EMAILSLOG_SHOW_IFRAME, $storeId);
     }
@@ -58,7 +58,7 @@ class Config extends AbstractHelper
      * @param int|null $storeId
      * @return bool
      */
-    public function isContentSaveNeeded(int $storeId = null): bool
+    public function isContentSaveNeeded(?int $storeId = null): bool
     {
         return (bool)$this->getConfigValue(self::XML_PATH_EMAILSLOG_SAVE_EMAIL_CONTENT, $storeId);
     }
@@ -69,7 +69,7 @@ class Config extends AbstractHelper
      * @param int|null $storeId
      * @return bool
      */
-    public function isModuleEnabled(int $storeId = null): bool
+    public function isModuleEnabled(?int $storeId = null): bool
     {
         return (bool)$this->getConfigValue(self::XML_PATH_EMAILSLOG_ENABLED, $storeId);
     }
