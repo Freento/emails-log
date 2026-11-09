@@ -5,58 +5,54 @@
 $emailLog = $block->getEmailLog();
 ?>
 
-<?php  ?>
+<div class="emailslog-view">
+    <div class="information">
+        <b><?= $escaper->escapeHtml(__('Recipient') . ':') ?></b>
+        <?= $escaper->escapeHtml($emailLog->getRecipient()); ?>
+        <hr>
 
-<div class="information">
-    <b><?= $escaper->escapeHtml(__('Recipient') . ':') ?></b>
-    <?= $escaper->escapeHtml($emailLog->getRecipient()); ?>
-    <hr>
+        <b><?= $escaper->escapeHtml(__('Bcc') . ':') ?></b>
+        <?= $escaper->escapeHtml($emailLog->getBcc() == null ? __('No ') : $emailLog->getBcc()) ?>
+        <hr>
 
-    <b><?= $escaper->escapeHtml(__('Bcc') . ':') ?></b>
-    <?= $escaper->escapeHtml($emailLog->getBcc() == null ? __('No ') :  $emailLog->getBcc()) ?>
-    <hr>
+        <b><?= $escaper->escapeHtml(__('Subject') . ':') ?></b>
+        <?= $escaper->escapeHtml($emailLog->getSubject()); ?>
+        <hr>
 
-    <b><?= $escaper->escapeHtml(__('Subject') . ':') ?></b>
-    <?= $escaper->escapeHtml($emailLog->getSubject()); ?>
-    <hr>
+        <b><?= $escaper->escapeHtml(__('Status') . ':') ?></b>
+        <?= $escaper->escapeHtml($emailLog->getStatus()); ?>
+        <hr>
 
-    <b><?= $escaper->escapeHtml(__('Status') . ':') ?></b>
-    <?= $escaper->escapeHtml($emailLog->getStatus()); ?>
-    <hr>
+        <b><?= $escaper->escapeHtml(__('Template') . ':') ?></b>
+        <?= $escaper->escapeHtml($emailLog->getTemplate()); ?>
+        <hr>
 
-    <b><?= $escaper->escapeHtml(__('Template') . ':') ?></b>
-    <?= $escaper->escapeHtml($emailLog->getTemplate()); ?>
-    <hr>
+        <b><?= $escaper->escapeHtml(__('Store') . ':') ?></b>
+        <?= $escaper->escapeHtml($block->getStoreLabel($emailLog)) ?>
+        <hr>
 
-    <b><?= $escaper->escapeHtml(__('Store') . ':') ?></b>
-    <?= $escaper->escapeHtml($block->getStoreLabel($emailLog)) ?>
-    <hr>
-
-    <b><?= $escaper->escapeHtml(__('Created at') . ':') ?></b>
-    <?= $escaper->escapeHtml($emailLog->getCreatedAt()); ?>
-</div>
-
-<?php if ($emailLog->getContent() == null): ?>
-    <div class="no-content">
-        <p><?=
-                /* @noEscape */
-                __(
-                    'While recording this log, the option Save content was turned off. '
-                        . 'You can enable the option by clicking on the %1.',
-                    '<a href="' . $escaper->escapeUrl($block->getConfigUrl()) . '">'. __('link') . '</a>'
-                )
-            ?>
-        </p>
+        <b><?= $escaper->escapeHtml(__('Created at') . ':') ?></b>
+        <?= $escaper->escapeHtml($emailLog->getCreatedAt()); ?>
     </div>
-<?php else: ?>
-    <?php if ($block->isIframeDisplayable()): ?>
+
+    <?php if ($emailLog->getContent() == null): ?>
+        <div class="no-content">
+            <p><?=
+                    /* @noEscape */
+                    __(
+                        'While recording this log, the option Save content was turned off. '
+                            . 'You can enable the option by clicking on the %1.',
+                        '<a href="' . $escaper->escapeUrl($block->getConfigUrl()) . '">'. __('link') . '</a>'
+                    )
+                ?>
+            </p>
+        </div>
+    <?php else: ?>
+        <?php $sandboxFlags = \Freento\EmailsLog\Controller\Adminhtml\Log\Iframe::SANDBOX_FLAGS; ?>
         <iframe
             src="<?= $escaper->escapeUrl($block->getIframeUrl()); ?>"
             class="frame-class"
+            sandbox="<?= $escaper->escapeHtmlAttr($sandboxFlags) ?>"
         ></iframe>
-    <?php else: ?>
-        <div class="content">
-            <?= /* @noEscape */ $emailLog->getContent(); ?>
-        </div>
     <?php endif; ?>
-<?php endif; ?>
+</div>

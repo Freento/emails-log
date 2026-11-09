@@ -1,4 +1,5 @@
 @color-red-emails-log: #f00;
+@color-gray-emails-log: #ccc;
 
 .emailslog-log-index {
     .additional-color {
@@ -7,32 +8,43 @@
 }
 
 .emailslog-log-view {
-    .content {
-        float: left;
+    .emailslog-view {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 3rem;
     }
 
-    .frame-class {
-        float: left;
-        height: 400px;
-        width: 700px;
+    //  Long unbreakable strings (reset links, tracking urls) must not push the columns apart
+    .information,
+    .no-content {
+        min-width: 0;
+        overflow-wrap: anywhere;
     }
 
     .information {
-        display: block;
-        float: left;
+        flex: 0 0 370px;
         font-size: 20px;
-        height: 100%;
-        margin-bottom: 5%;
-        margin-left: 10%;
-        margin-right: 3%;
-        width: 370px;
+        line-height: 1.4;
+
+        //  An inline email brings its own hr and b rules into the page; these win by specificity
+        hr {
+            margin: 10px 0;
+        }
+
+        b {
+            font-weight: 700;
+        }
     }
 
     .no-content {
-        display: block;
-        float: left;
+        flex: 1 1 0;
         font-size: 20px;
-        width: 40%;
-        word-wrap: break-word;
+    }
+
+    .frame-class {
+        border: 1px solid @color-gray-emails-log;
+        flex: 1 1 0;
+        height: 600px;
+        width: 100%;
     }
 }

@@ -1,9 +1,6 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <tab id="freento" translate="label" sortOrder="1000">
-            <label>freento</label>
-        </tab>
         <section id="emailslog" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Emails Log</label>
             <tab>freento</tab>
@@ -14,15 +11,25 @@
                     <label>Emails Logging enabled</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
+                <field id="log_when_emails_disabled" translate="label comment" type="select" sortOrder="15" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Log emails even if email communications is disabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                    <comment><![CDATA[
+                        This setting only matters when <strong>Stores &gt; Configuration &gt; Advanced &gt; System &gt; Mail Sending Settings &gt; Disable Email Communications</strong> is set to "Yes", i.e. when Magento does not send any emails.<br/>
+                        <strong>Yes</strong> &mdash; emails are still written to the Emails Log with the "Not Sent" status, although they are not delivered to recipients. Useful on staging and QA environments, where outgoing mail must stay off but you need to see which emails the store would have sent.<br/>
+                        <strong>Limitation:</strong> sales emails (order, invoice, shipment, credit memo and their comment emails) are not logged even when this setting is "Yes". While email communications are disabled, Magento skips these emails before they are composed, so there is nothing to log.<br/>
+                        <strong>No</strong> &mdash; nothing is logged while email communications are disabled.<br/>
+                        When "Disable Email Communications" is set to "No", this setting has no effect: emails are sent and logged as usual ("Success" or "Failed").<br/>
+                        This setting never affects email delivery itself. It only controls what is written to the log.
+                    ]]></comment>
+                </field>
                 <field id="save_email_content" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Save Email Content</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>Adds the ability to view additional information about letters.</comment>
-                </field>
-                <field id="show_iframe" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Display content in a frame</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>The content on the view page will be contained in the frame.</comment>
                 </field>
                 <field id="days_before_clean" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Clear records older than (days)</label>

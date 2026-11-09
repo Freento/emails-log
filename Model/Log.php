@@ -132,7 +132,7 @@ class Log extends AbstractModel implements LogInterface
     /**
      * @inheritDoc
      */
-    public function getTemplate(): string
+    public function getTemplate(): ?string
     {
         return $this->getData(self::TEMPLATE);
     }
@@ -148,7 +148,7 @@ class Log extends AbstractModel implements LogInterface
     /**
      * @inheritDoc
      */
-    public function getStore(): string
+    public function getStore(): ?string
     {
         return $this->getData(self::STORE_ID);
     }

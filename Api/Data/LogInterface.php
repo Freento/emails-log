@@ -109,9 +109,9 @@ interface LogInterface
     /**
      * Return template
      *
-     * @return string
+     * @return string|null
      */
-    public function getTemplate(): string;
+    public function getTemplate(): ?string;
 
     /**
      * Set template
@@ -124,9 +124,9 @@ interface LogInterface
     /**
      * Return store
      *
-     * @return string
+     * @return string|null
      */
-    public function getStore(): string;
+    public function getStore(): ?string;
 
     /**
      * Set store

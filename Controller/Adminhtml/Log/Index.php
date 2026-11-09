@@ -13,6 +13,11 @@ use Magento\Framework\View\Result\PageFactory;
 class Index extends Action implements HttpGetActionInterface
 {
     /**
+     * Authorization level of a basic admin session
+     */
+    public const ADMIN_RESOURCE = 'Freento_EmailsLog::freento_log';
+
+    /**
      * @param PageFactory $resultPageFactory
      * @param Context $context
      */
@@ -31,7 +36,7 @@ class Index extends Action implements HttpGetActionInterface
     public function execute(): Page
     {
         $resultPage = $this->resultPageFactory->create();
-        $resultPage->getConfig()->getTitle()->prepend((__('Emails Log')));
+        $resultPage->getConfig()->getTitle()->prepend(__('Emails Log'));
         return $resultPage;
     }
 }

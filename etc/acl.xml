@@ -3,13 +3,13 @@
    <acl>
         <resources>
             <resource id="Magento_Backend::admin">
-                <resource id="Magento_Backend::system">
-                    <resource id="Freento_EmailsLog::freento_log" title="Emails Log"/>
+                <resource id="Freento_Base::freento_base">
+                    <resource id="Freento_EmailsLog::freento_log" title="Emails Log" sortOrder="20"/>
                 </resource>
                 <resource id="Magento_Backend::stores">
                     <resource id="Magento_Backend::stores_settings">
                         <resource id="Magento_Config::config">
-                            <resource id="Freento_EmailsLog::emailslog_config" title="Emails Log Configuration"/>
+                            <resource id="Freento_EmailsLog::emailslog_config" title="Freento - Emails Log Configuration"/>
                         </resource>
                     </resource>
                 </resource>

@@ -10,6 +10,7 @@ class Status implements OptionSourceInterface
 {
     public const STATUS_SUCCESS = 'Success';
     public const STATUS_FAILED = 'Failed';
+    public const STATUS_NOT_SENT = 'Not Sent';
 
     /**
      * Returns array of options
@@ -20,7 +21,8 @@ class Status implements OptionSourceInterface
     {
         return [
             ['label' => __('Success'), 'value' => self::STATUS_SUCCESS],
-            ['label' => __('Failed'), 'value' => self::STATUS_FAILED]
+            ['label' => __('Failed'), 'value' => self::STATUS_FAILED],
+            ['label' => __('Not Sent'), 'value' => self::STATUS_NOT_SENT]
         ];
     }
 }

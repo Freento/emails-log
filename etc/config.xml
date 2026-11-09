@@ -4,8 +4,8 @@
         <emailslog>
             <general>
                 <enabled>0</enabled>
+                <log_when_emails_disabled>0</log_when_emails_disabled>
                 <save_email_content>0</save_email_content>
-                <show_iframe>1</show_iframe>
                 <days_before_clean>90</days_before_clean>
             </general>
         </emailslog>

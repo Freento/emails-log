@@ -7,7 +7,7 @@ namespace Freento\EmailsLog\Model;
 use Freento\EmailsLog\Model\ResourceModel\Log\Collection;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Api\SortOrder;
-use Magento\Framework\Data\SearchResultInterface;
+use Magento\Framework\Api\SearchResultsInterface;
 
 abstract class AbstractRepository
 {
@@ -63,14 +63,14 @@ abstract class AbstractRepository
      *
      * @param SearchCriteriaInterface $searchCriteria
      * @param ResourceModel\Log\Collection $collection
-     * @param SearchResultInterface $searchResults
-     * @return mixed
+     * @param SearchResultsInterface $searchResults
+     * @return SearchResultsInterface
      */
     public function buildSearchResult(
         SearchCriteriaInterface $searchCriteria,
         Collection $collection,
-        SearchResultInterface $searchResults
-    ): SearchResultInterface {
+        SearchResultsInterface $searchResults
+    ): SearchResultsInterface {
         $searchResults->setSearchCriteria($searchCriteria);
         $searchResults->setItems($collection->getItems());
         $searchResults->setTotalCount($collection->getSize());

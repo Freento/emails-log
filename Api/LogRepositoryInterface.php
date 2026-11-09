@@ -7,7 +7,7 @@ namespace Freento\EmailsLog\Api;
 use Exception;
 use Freento\EmailsLog\Api\Data\LogInterface;
 use Magento\Framework\Api\SearchCriteriaInterface;
-use Magento\Framework\Data\SearchResultInterface;
+use Magento\Framework\Api\SearchResultsInterface;
 use Magento\Framework\Exception\AlreadyExistsException;
 use Magento\Framework\Exception\NoSuchEntityException;
 
@@ -35,9 +35,9 @@ interface LogRepositoryInterface
      * Returns a list of email logs from a database by $searchCriteria
      *
      * @param SearchCriteriaInterface $searchCriteria
-     * @return SearchResultInterface
+     * @return SearchResultsInterface
      */
-    public function getList(SearchCriteriaInterface $searchCriteria): SearchResultInterface;
+    public function getList(SearchCriteriaInterface $searchCriteria): SearchResultsInterface;
 
     /**
      * Returns a log from database by ID

@@ -12,9 +12,10 @@ use Freento\EmailsLog\Model\LogFactory;
 use Freento\EmailsLog\Model\LogRepository;
 use Freento\EmailsLog\Model\Source\Status;
 use Magento\Email\Model\Transport;
-use Magento\Framework\Exception\AlreadyExistsException;
 use Magento\Framework\Exception\MailException;
 use Magento\Framework\Mail\EmailMessageInterface;
+use Psr\Log\LoggerInterface;
+use Throwable;
 
 class TransportPlugin
 {
@@ -23,12 +24,14 @@ class TransportPlugin
      * @param LogFactory $logFactory
      * @param LogRepository $logRepository
      * @param AdditionalInfoStorage $additionalInfoStorage
+     * @param LoggerInterface $logger
      */
     public function __construct(
         private readonly Config $helperConfig,
         private readonly LogFactory $logFactory,
         private readonly LogRepository $logRepository,
-        private readonly AdditionalInfoStorage $additionalInfoStorage
+        private readonly AdditionalInfoStorage $additionalInfoStorage,
+        private readonly LoggerInterface $logger
     ) {
     }
 
@@ -38,47 +41,69 @@ class TransportPlugin
      * @param Transport $transport
      * @param callable $proceed
      * @return void
-     * @throws AlreadyExistsException
-     * @throws MailException
+     * @throws MailException|Throwable
      */
     public function aroundSendMessage(Transport $transport, callable $proceed): void
     {
-        if (!$this->helperConfig->isModuleEnabled()) {
+        // Status to log the email with; null means the email must not be logged
+        $status = null;
+
+        if ($this->helperConfig->isModuleEnabled()) {
+            if (!$this->helperConfig->isEmailCommunicationDisabled()) {
+                $status = Status::STATUS_SUCCESS;
+            } elseif ($this->helperConfig->isLogWhenEmailsDisabled()) {
+                // The core EmailDisable plugin swallows the sending inside $proceed()
+                $status = Status::STATUS_NOT_SENT;
+            }
+        }
+
+        if ($status === null) {
             $proceed();
         } else {
-            $this->logMessage($transport, $proceed);
+            $this->logMessage($transport, $proceed, $status);
         }
     }
 
     /**
-     * Log email
+     * Send the email and log it
+     *
+     * A failure to write the log never affects sending: see saveLog().
      *
      * @param Transport $transport
      * @param callable $proceed
+     * @param string $status status to log if sending does not fail
      * @return void
-     * @throws AlreadyExistsException
-     * @throws MailException
+     * @throws MailException|Throwable
      */
-    private function logMessage(Transport $transport, callable $proceed): void
+    private function logMessage(Transport $transport, callable $proceed, string $status): void
     {
-        $status = Status::STATUS_SUCCESS;
-        $message = $transport->getMessage();
-
         try {
             $proceed();
-        } catch (Exception $e) {
-            $status = Status::STATUS_FAILED;
-            throw new MailException(__($e->getMessage()), $e);
-        } finally {
-            $recipient = current($message->getTo())->getEmail();
-            $subject = $message->getSubject();
-            $content = $this->getContent($message);
-            $bcc = $this->getBcc($message);
+        } catch (Throwable $e) {
+            $this->saveLog($transport, Status::STATUS_FAILED);
+            // MailException accepts only an Exception as the cause, so PHP errors are rethrown as they are
+            throw $e instanceof Exception ? new MailException(__($e->getMessage()), $e) : $e;
+        }
+
+        $this->saveLog($transport, $status);
+    }
+
+    /**
+     * Write the email to the log; never throws, errors go to the system log instead
+     *
+     * @param Transport $transport
+     * @param string $status
+     * @return void
+     */
+    private function saveLog(Transport $transport, string $status): void
+    {
+        try {
+            $message = $transport->getMessage();
 
             $log = $this->logFactory->create();
-            $log->setRecipient($recipient);
-            $log->setBcc($bcc);
-            $log->setSubject($subject);
+            $log->setRecipient($this->getRecipients($message));
+            $log->setBcc($this->getBcc($message));
+            $log->setSubject((string)$message->getSubject());
             $log->setStatus($status);
 
             $transportId = spl_object_hash($transport);
@@ -88,16 +113,34 @@ class TransportPlugin
                 $log->setTemplate($additionalInfo->getData(LogInterface::TEMPLATE));
             }
 
-            if ($additionalInfo->getData(LogInterface::STORE_ID)) {
-                $log->setStore($additionalInfo->getData(LogInterface::STORE_ID));
+            // Store id "0" is the admin store and must be logged too, so no plain truthiness check here
+            $storeId = $additionalInfo->getData(LogInterface::STORE_ID);
+            if ($storeId !== null && $storeId !== '') {
+                $log->setStore($storeId);
             }
 
             if ($this->helperConfig->isContentSaveNeeded()) {
-                $log->setContent($content);
+                $log->setContent($this->getContent($message));
             }
 
             $this->logRepository->save($log);
+        } catch (Throwable $e) {
+            $this->logger->error(
+                'Freento_EmailsLog: failed to save email log: ' . $e->getMessage(),
+                ['exception' => $e]
+            );
         }
+    }
+
+    /**
+     * Get all "To" recipients as a comma-separated string
+     *
+     * @param EmailMessageInterface $message
+     * @return string
+     */
+    private function getRecipients(EmailMessageInterface $message): string
+    {
+        return implode(', ', array_map(fn($address) => $address->getEmail(), $message->getTo()));
     }
 
     /**

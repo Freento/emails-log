@@ -58,7 +58,7 @@ class StoreView extends Column
      */
     protected function prepareItem(array $item): string
     {
-        if (!isset($item['store_id']) || ($item['store_id'] !== 0 && !$item['store_id'])) {
+        if (!isset($item['store_id']) || $item['store_id'] === '') {
             return '-';
         }
 

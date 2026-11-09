@@ -14,9 +14,15 @@ use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Freento\EmailsLog\Model\LogRepository;
+use Magento\Framework\View\Result\Page;
 
 class View extends Action implements HttpGetActionInterface
 {
+    /**
+     * Authorization level of a basic admin session
+     */
+    public const ADMIN_RESOURCE = 'Freento_EmailsLog::freento_log';
+
     /**
      * @param ResultFactory $resultFactory
      * @param LogRepository $logRepository
@@ -50,6 +56,8 @@ class View extends Action implements HttpGetActionInterface
         try {
             $emailLog = $this->logRepository->getById($logId);
             $this->dataPersistor->set(Log::DATA_PERSISTOR_KEY, $emailLog);
+
+            /** @var Page $resultPage */
             $resultPage = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
             $resultPage->getConfig()->getTitle()->prepend(__('Email log %1', $emailLog->getLogId()));
         } catch (NoSuchEntityException) {

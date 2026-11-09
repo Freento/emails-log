@@ -10,7 +10,7 @@ use Freento\EmailsLog\Api\LogRepositoryInterface;
 use Freento\EmailsLog\Model\ResourceModel\Log\CollectionFactory;
 use Freento\EmailsLog\Model\ResourceModel\Log;
 use Magento\Framework\Api\SearchCriteriaInterface;
-use Magento\Framework\Data\SearchResultInterface;
+use Magento\Framework\Api\SearchResultsInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 
 class LogRepository extends AbstractRepository implements LogRepositoryInterface
@@ -50,7 +50,7 @@ class LogRepository extends AbstractRepository implements LogRepositoryInterface
     /**
      * @inheritDoc
      */
-    public function getList(SearchCriteriaInterface $searchCriteria): SearchResultInterface
+    public function getList(SearchCriteriaInterface $searchCriteria): SearchResultsInterface
     {
         $collection = $this->logCollectionFactory->create();
         $searchResults = $this->searchResultsFactory->create();

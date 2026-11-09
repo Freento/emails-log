@@ -20,6 +20,11 @@ use Psr\Log\LoggerInterface;
 class MassDelete extends Action implements HttpPostActionInterface
 {
     /**
+     * Authorization level of a basic admin session
+     */
+    public const ADMIN_RESOURCE = 'Freento_EmailsLog::freento_log';
+
+    /**
      * @param Filter $filter
      * @param CollectionFactory $collectionFactory
      * @param LogRepositoryInterface $logRepository
