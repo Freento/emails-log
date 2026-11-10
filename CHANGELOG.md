@@ -1,5 +1,17 @@
 # Release Notes
 
+## 1.4.1
+
+### Fixes
+
+- **The email view page no longer fails with a dependency injection error.** The constructor of
+  `Controller\Adminhtml\Log\View` declared an untyped required `$resultFactory` argument that the
+  ObjectManager could not resolve, so in developer and default mode the page failed with
+  `BadMethodCallException: Missing required argument $resultFactory`. The argument was removed —
+  `$this->resultFactory` is provided by the parent controller. In production mode the compiled DI
+  configuration passed `null` for this argument and the parent constructor overwrote it right
+  after, so the page worked there and the problem stayed invisible.
+
 ## 1.4.0
 
 This release adds logging of emails that Magento does not send, closes a security issue on

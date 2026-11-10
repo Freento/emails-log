@@ -24,13 +24,11 @@ class View extends Action implements HttpGetActionInterface
     public const ADMIN_RESOURCE = 'Freento_EmailsLog::freento_log';
 
     /**
-     * @param ResultFactory $resultFactory
      * @param LogRepository $logRepository
      * @param DataPersistorInterface $dataPersistor
      * @param Context $context
      */
     public function __construct(
-        protected $resultFactory,
         private readonly LogRepository $logRepository,
         private readonly DataPersistorInterface $dataPersistor,
         Context $context
